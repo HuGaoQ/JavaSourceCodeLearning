@@ -1,5 +1,6 @@
 package com.bruis.rocketmqdemo.demo03;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
 import org.apache.rocketmq.client.consumer.listener.ConsumeOrderlyContext;
 import org.apache.rocketmq.client.consumer.listener.ConsumeOrderlyStatus;
@@ -17,25 +18,26 @@ import java.util.concurrent.TimeUnit;
  * @author lhy
  * @date 2021/7/23
  */
+@Slf4j
 public class Consumer {
 
     public static void main(String[] args) throws Exception {
         DefaultMQPushConsumer consumer = new DefaultMQPushConsumer(Producer.GROUP_NAME);
         consumer.setNamesrvAddr(Producer.NAMESRV_ADDRESS);
 
-        /**
-         * 设置Consumer第一次启动是从队列头部开始消费还是队列尾部开始消费
-         * 如果非第一次启动，那么按照上次消费的位置继续消费
+        /*
+          设置Consumer第一次启动是从队列头部开始消费还是队列尾部开始消费
+          如果非第一次启动，那么按照上次消费的位置继续消费
          */
         consumer.setConsumeFromWhere(ConsumeFromWhere.CONSUME_FROM_LAST_OFFSET);
         consumer.subscribe(Producer.TOPIC_NAME, "TagA || TagC || TagD");
 
-        /**
-         * 顺序消费的消息类？？MessageListenerOrderly
+        /*
+          顺序消费的消息类？？MessageListenerOrderly
          */
         consumer.registerMessageListener(new MessageListenerOrderly() {
 
-            Random random = new Random();
+            final Random random = new Random();
 
             @Override
             public ConsumeOrderlyStatus consumeMessage(List<MessageExt> msgs, ConsumeOrderlyContext context) {
@@ -49,7 +51,7 @@ public class Consumer {
                     //模拟业务逻辑处理中...
                     TimeUnit.SECONDS.sleep(random.nextInt(10));
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    log.info("e: {}", e.getMessage());
                 }
                 return ConsumeOrderlyStatus.SUCCESS;
             }

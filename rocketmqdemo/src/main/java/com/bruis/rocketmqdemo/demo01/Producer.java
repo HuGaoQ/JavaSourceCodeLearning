@@ -6,9 +6,8 @@ import org.apache.rocketmq.common.message.Message;
 
 /**
  * @author lhy
- *
+ * <p>
  * 普通生产者
- *
  * @date 2021/7/10
  */
 public class Producer {
@@ -29,9 +28,12 @@ public class Producer {
         producer.start();
 
         for (int i = 0; i < 5; i++) {
-            Message message = new Message(TOPIC_NAME,// topic
-                    "TagA",//tag
-                    "key" + i,//keys
+            // topic
+            Message message = new Message(TOPIC_NAME,
+                    //tag
+                    "TagA",
+                    //keys
+                    "key" + i,
                     ("Hello world RocketMQ Demo01" + i).getBytes());
 
             // 向broker发送消息============================> 同步发送

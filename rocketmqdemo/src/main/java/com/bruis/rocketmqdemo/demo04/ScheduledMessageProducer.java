@@ -4,7 +4,6 @@ import org.apache.rocketmq.client.producer.DefaultMQProducer;
 import org.apache.rocketmq.common.message.Message;
 
 /**
- *
  * 延时消息生产
  *
  * @author lhy

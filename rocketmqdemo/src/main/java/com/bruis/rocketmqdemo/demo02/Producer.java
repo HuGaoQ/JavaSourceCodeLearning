@@ -1,5 +1,6 @@
 package com.bruis.rocketmqdemo.demo02;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.client.producer.DefaultMQProducer;
 import org.apache.rocketmq.client.producer.SendCallback;
 import org.apache.rocketmq.client.producer.SendResult;
@@ -12,6 +13,7 @@ import org.apache.rocketmq.common.message.Message;
  *
  * @date 2021/7/10
  */
+@Slf4j
 public class Producer {
 
     public static final String NAMESRV_ADDRESS = "127.0.0.1:9876";
@@ -30,9 +32,12 @@ public class Producer {
         producer.start();
 
         for (int i = 0; i < 5; i++) {
-            Message message = new Message(TOPIC_NAME,// topic
-                    "TagA",//tag
-                    "key" + i,//keys
+            // topic
+            Message message = new Message(TOPIC_NAME,
+                    //tag
+                    "TagA",
+                    //keys
+                    "key" + i,
                     ("Hello world RocketMQ Demo01" + i).getBytes());
 
             // 向broker发送消息
@@ -44,7 +49,7 @@ public class Producer {
 
                 @Override
                 public void onException(Throwable e) {
-                    e.printStackTrace();
+                    log.info("e: {}", e.getMessage());
                     System.err.println("==============发送失败");
                 }
             });

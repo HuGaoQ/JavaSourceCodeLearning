@@ -1,10 +1,10 @@
 package com.bruis.rocketmqdemo.demo03;
 
+import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.client.producer.DefaultMQProducer;
-import org.apache.rocketmq.client.producer.MessageQueueSelector;
 import org.apache.rocketmq.client.producer.SendResult;
 import org.apache.rocketmq.common.message.Message;
-import org.apache.rocketmq.common.message.MessageQueue;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -12,12 +12,12 @@ import java.util.Date;
 import java.util.List;
 
 /**
- *
  * 顺序消息样例
  *
  * @author lhy
  * @date 2021/7/23
  */
+@Slf4j
 public class Producer {
 
     public static final String NAMESRV_ADDRESS = "127.0.0.1:9876";
@@ -50,19 +50,16 @@ public class Producer {
 //                return mqs.get((int) index);
 //            }, orderList.get(i).getOrderId());//订单id
 
-            SendResult sendResult = producer.send(msg, new MessageQueueSelector() {
-                @Override
-                public MessageQueue select(List<MessageQueue> mqs, Message msg, Object arg) {
-                    Long id = (Long) arg;
-                    long index = id % mqs.size();
-                    return mqs.get((int) index);
-                }
+            SendResult sendResult = producer.send(msg, (mqs, msg1, arg) -> {
+                Long id = (Long) arg;
+                long index = id % mqs.size();
+                return mqs.get((int) index);
             }, orderList.get(i).getOrderId());
 
-           System.out.println(String.format("SendResult status:%s, queueId:%d, body:%s",
-               sendResult.getSendStatus(),
-               sendResult.getMessageQueue().getQueueId(),
-               body));
+            System.out.printf("SendResult status:%s, queueId:%d, body:%s%n",
+                    sendResult.getSendStatus(),
+                    sendResult.getMessageQueue().getQueueId(),
+                    body);
         }
 
         producer.shutdown();
@@ -71,25 +68,11 @@ public class Producer {
     /**
      * 订单的步骤
      */
-    private class OrderStep {
+
+    @Data
+    private static class OrderStep {
         private long orderId;
         private String desc;
-
-        public long getOrderId() {
-            return orderId;
-        }
-
-        public void setOrderId(long orderId) {
-            this.orderId = orderId;
-        }
-
-        public String getDesc() {
-            return desc;
-        }
-
-        public void setDesc(String desc) {
-            this.desc = desc;
-        }
 
         @Override
         public String toString() {
@@ -104,7 +87,7 @@ public class Producer {
      * 生成模拟订单数据
      */
     private List<OrderStep> buildOrders() {
-        List<OrderStep> orderList = new ArrayList<OrderStep>();
+        List<OrderStep> orderList = new ArrayList<>();
 
         OrderStep orderDemo = new OrderStep();
         orderDemo.setOrderId(15103111039L);
@@ -158,5 +141,4 @@ public class Producer {
 
         return orderList;
     }
-
 }
