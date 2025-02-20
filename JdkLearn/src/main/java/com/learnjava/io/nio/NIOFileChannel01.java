@@ -1,6 +1,5 @@
 package com.learnjava.io.nio;
 
-import java.awt.print.Pageable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -71,7 +70,7 @@ public class NIOFileChannel01 {
 
         FileChannel fileChannel = fileInputStream.getChannel();
         // create buffer
-        ByteBuffer byteBuffer = ByteBuffer.allocate((int)file.length());
+        ByteBuffer byteBuffer = ByteBuffer.allocate((int) file.length());
 
         // disk -> channel -> buffer
         fileChannel.read(byteBuffer);

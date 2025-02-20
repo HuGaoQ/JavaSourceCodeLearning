@@ -42,22 +42,19 @@ public class LambdaDemoForList {
      * Limit + Skip 数据截取
      */
     public static void test02() {
-
-        /**
-         * 截取前两位字符串
+        /*
+          截取前两位字符串
          */
         List<String> limitN = Stream.of(arrays)
                 .limit(2)
                 .collect(Collectors.toList());
-
-        /**
-         * 过滤掉前两位元素
+        System.out.println(limitN);
+        /*
+          过滤掉前两位元素
          */
         List<String> skipN = Stream.of(arrays)
                 .skip(2)
                 .collect(Collectors.toList());
-
-        System.out.println(limitN);
         System.out.println(skipN);
     }
 

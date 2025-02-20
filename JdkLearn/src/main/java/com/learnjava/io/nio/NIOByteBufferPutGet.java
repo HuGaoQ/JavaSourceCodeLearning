@@ -14,7 +14,7 @@ public class NIOByteBufferPutGet {
         buffer.putInt(100);
         buffer.putLong(9);
         buffer.putChar('b');
-        buffer.putShort((short)4);
+        buffer.putShort((short) 4);
 
         // flip
         buffer.flip();

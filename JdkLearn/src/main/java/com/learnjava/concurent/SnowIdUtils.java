@@ -41,7 +41,7 @@ public class SnowIdUtils {
         /**
          * 生成id机器标识部分
          */
-        private long machineIdPart;
+        private final long machineIdPart;
         /**
          * 序列号
          */
@@ -61,6 +61,7 @@ public class SnowIdUtils {
             long localIp = Long.parseLong(ip.replace(".", ""));
             machineIdPart = (localIp & MAX_MACHINE_ID) << SEQUENCE_BIT;
         }
+
         /**
          * 获取雪花ID
          */
@@ -80,6 +81,7 @@ public class SnowIdUtils {
             lastStamp = currentStamp;
             return (currentStamp - START_TIMESTAMP) << TIMESTAMP_LEFT | machineIdPart | sequence;
         }
+
         /**
          * 阻塞到下一个毫秒，直到获得新的时间戳
          */
@@ -91,6 +93,7 @@ public class SnowIdUtils {
             }
             return mill;
         }
+
         /**
          * 返回以毫秒为单位的当前时间
          */
@@ -105,6 +108,7 @@ public class SnowIdUtils {
     public static long uniqueLong() {
         return SnowIdUtils.SnowFlake.SNOW_FLAKE.nextId();
     }
+
     /**
      * 获取String类型雪花ID
      */

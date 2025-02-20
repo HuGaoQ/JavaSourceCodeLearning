@@ -5,22 +5,20 @@ import java.util.concurrent.*;
 public class ForkJoinDemo {
 
     /**
-     *
      * Fork/join用法；
      * 1. 让任务类Task继承RecursiveTask<T>， 实现RecursiveTask的compute()方法
      * 2. 在compute()方法里，调用Task.fork()方法，开启子任务，然后再调用Task.join()合并结果
      * 3. 通过线程池调用Fork/Join框架：
-     *   ForkJoinPool pool = new ForkJoinPool();
-     *   Future<Integer> future = pool.submit(task);
-     *   T t = future.get(1, TimeUnit.SECONDS);
-     *
+     * ForkJoinPool pool = new ForkJoinPool();
+     * Future<Integer> future = pool.submit(task);
+     * T t = future.get(1, TimeUnit.SECONDS);
      */
 
-    public static void main(String ... args) throws ExecutionException, InterruptedException, TimeoutException {
+    public static void main(String... args) throws ExecutionException, InterruptedException, TimeoutException {
 
         ForkJoinPool pool = new ForkJoinPool();
 
-        int[] array = {100,400,200,90,80,300,600,10,20,-10,30,2000,1000};
+        int[] array = {100, 400, 200, 90, 80, 300, 600, 10, 20, -10, 30, 2000, 1000};
 
         MaxNumber task = new MaxNumber(array, 0, array.length - 1);
 
@@ -35,12 +33,10 @@ public class ForkJoinDemo {
      */
     private static class MaxNumber extends RecursiveTask<Integer> {
 
-        private int threshold = 2;
+        private final int[] array; // the data array
 
-        private int[] array; // the data array
-
-        private int index0 = 0;
-        private int index1 = 0;
+        private final int index0;
+        private final int index1;
 
         public MaxNumber(int[] array, int index0, int index1) {
             this.array = array;
@@ -51,9 +47,10 @@ public class ForkJoinDemo {
         @Override
         protected Integer compute() {
             int max = Integer.MIN_VALUE;
+            int threshold = 2;
             if ((index1 - index0) <= threshold) {
 
-                for (int i = index0;i <= index1; i ++) {
+                for (int i = index0; i <= index1; i++) {
                     max = Math.max(max, array[i]);
                 }
 

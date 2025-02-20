@@ -30,45 +30,17 @@ public class MappedByteBufferTest {
         System.out.println("change success");
     }
 
-    /**
-     *
-     * @param from
-     * @param to
-     * @throws IOException
-     */
     public static void mmap4zeroCopy(String from, String to) throws IOException {
-        FileChannel source = null;
-        FileChannel destination = null;
-        try {
-            source = new RandomAccessFile(from, "r").getChannel();
-            destination = new RandomAccessFile(to, "rw").getChannel();
+        try (FileChannel source = new RandomAccessFile(from, "r").getChannel(); FileChannel destination = new RandomAccessFile(to, "rw").getChannel()) {
             MappedByteBuffer inMappedBuf =
                     source.map(FileChannel.MapMode.READ_ONLY, 0, source.size());
             destination.write(inMappedBuf);
-        } finally {
-            if (source != null) {
-                source.close();
-            }
-            if (destination != null) {
-                destination.close();
-            }
         }
     }
 
-    public static void sendfile4zeroCopy(String from, String to) throws IOException{
-        FileChannel source = null;
-        FileChannel destination = null;
-        try {
-            source = new FileInputStream(from).getChannel();
-            destination = new FileOutputStream(to).getChannel();
+    public static void sendfile4zeroCopy(String from, String to) throws IOException {
+        try (FileChannel source = new FileInputStream(from).getChannel(); FileChannel destination = new FileOutputStream(to).getChannel()) {
             source.transferTo(0, source.size(), destination);
-        } finally {
-            if (source != null) {
-                source.close();
-            }
-            if (destination != null) {
-                destination.close();
-            }
         }
     }
 }

@@ -21,12 +21,7 @@ public class Server {
     }
 
     public void start() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                doStart();
-            }
-        }).start();
+        new Thread(this::doStart).start();
     }
 
     public void doStart() {

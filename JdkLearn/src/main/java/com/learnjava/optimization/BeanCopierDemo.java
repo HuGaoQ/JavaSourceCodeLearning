@@ -1,13 +1,12 @@
 package com.learnjava.optimization;
 
+import lombok.Data;
 import org.springframework.cglib.beans.BeanCopier;
 
 /**
- *
  * 经过测试，BeanCopier性能是BeanUtils10倍左右。
- *
+ * <p>
  * BeanCopier拷贝速度快，性能瓶颈出现在创建BeanCopier实例的过程中。 所以，把创建过的BeanCopier实例放到缓存中，下次可以直接获取，提升性能：
- *
  *
  * @author lhy
  * @date 2021/7/21
@@ -25,34 +24,7 @@ public class BeanCopierDemo {
         System.out.println(vo);
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    @Data
     public static class PersonVo {
         private String name;
         private String grade;
@@ -71,47 +43,10 @@ public class BeanCopierDemo {
                     '}';
         }
 
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public String getGrade() {
-            return grade;
-        }
-
-        public void setGrade(String grade) {
-            this.grade = grade;
-        }
-
-        public Integer getAge() {
-            return age;
-        }
-
-        public void setAge(Integer age) {
-            this.age = age;
-        }
-
-        public Integer getHeight() {
-            return height;
-        }
-
-        public void setHeight(Integer height) {
-            this.height = height;
-        }
-
-        public Integer getWeight() {
-            return weight;
-        }
-
-        public void setWeight(Integer weight) {
-            this.weight = weight;
-        }
     }
 
+
+    @Data
     public static class Person {
         private String name;
         private String grade;
@@ -127,44 +62,5 @@ public class BeanCopierDemo {
             this.weight = weight;
         }
 
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public String getGrade() {
-            return grade;
-        }
-
-        public void setGrade(String grade) {
-            this.grade = grade;
-        }
-
-        public Integer getAge() {
-            return age;
-        }
-
-        public void setAge(Integer age) {
-            this.age = age;
-        }
-
-        public Integer getHeight() {
-            return height;
-        }
-
-        public void setHeight(Integer height) {
-            this.height = height;
-        }
-
-        public Integer getWeight() {
-            return weight;
-        }
-
-        public void setWeight(Integer weight) {
-            this.weight = weight;
-        }
     }
 }

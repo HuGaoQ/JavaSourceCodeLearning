@@ -11,7 +11,7 @@ public class ReadOnlyBuffer {
         ByteBuffer buffer = ByteBuffer.allocate(64);
 
         for (int i = 0; i < 64; i++) {
-            buffer.put((byte)i);
+            buffer.put((byte) i);
         }
 
         // flip
@@ -27,7 +27,7 @@ public class ReadOnlyBuffer {
         }
 
         // throw ReadOnlyBufferException
-        readOnlyBuffer.put((byte)100);
+        readOnlyBuffer.put((byte) 100);
 
     }
 }

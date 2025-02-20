@@ -43,13 +43,12 @@ public class LambdaReduceDemo {
 
     /**
      * 操作Employee集合元素，将所有员工的年龄通过reduce累加起来
-     *
+     * <p>
      * U identity, BiFunction<U, ? super T, U> accumulator, BinaryOperator<U> combiner
      * reduce的三个参数：
      * 1）初始值；
      * 2）累加器（可自己实现逻辑）
      * 3) 合并器（parallelStream模式时的合并）
-     *
      */
     public static void test03() {
         // 将Employee集合元素转化为Integer集合元素（流）
@@ -90,9 +89,6 @@ public class LambdaReduceDemo {
 
     /**
      * 可作为BiFunction，传入到reduce作为入参
-     * @param a
-     * @param b
-     * @return
      */
     public static Integer mySum(int a, int b) {
         return a + b;

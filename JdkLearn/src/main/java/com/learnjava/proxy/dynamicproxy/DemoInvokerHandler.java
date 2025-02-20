@@ -9,14 +9,13 @@ import java.lang.reflect.Proxy;
 
 /**
  * @author bruis
- *
+ * <p>
  * jdk动态代理
- *
  */
 public class DemoInvokerHandler implements InvocationHandler {
 
     // 真正的业务对象
-    private Object realSubject;
+    private final Object realSubject;
 
     public DemoInvokerHandler(Object realSubject) {
         this.realSubject = realSubject;
@@ -35,7 +34,6 @@ public class DemoInvokerHandler implements InvocationHandler {
 
     /**
      * 创建代理对象并返回
-     * @return
      */
     public Object getProxy() {
         return Proxy.newProxyInstance(Thread.currentThread().getContextClassLoader(),

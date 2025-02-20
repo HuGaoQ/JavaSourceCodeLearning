@@ -19,7 +19,7 @@ public class WeakReferenceTest {
     }
 
     private static void test01() throws InterruptedException {
-        List<Reference> refList = new ArrayList<Reference>();
+        List<Reference> refList = new ArrayList<>();
 
         for (int i = 0; i < 1000; i++) {
             // 10mb

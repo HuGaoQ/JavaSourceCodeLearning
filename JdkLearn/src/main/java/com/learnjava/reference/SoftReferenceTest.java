@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class SoftReferenceTest {
     public static void main(String[] args) throws InterruptedException {
-        List<Reference> refList = new ArrayList<Reference>();
+        List<Reference> refList = new ArrayList<>();
 
         for (int i = 0; i < 1000; i++) {
             // 10mb

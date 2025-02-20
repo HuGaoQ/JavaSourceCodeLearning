@@ -12,13 +12,13 @@ import java.util.function.Consumer;
  */
 public class LRUCache<K, V> implements Iterable<K> {
 
-    private int MAX = 3;
-    private LinkedHashMap<K, V> cache = new LinkedHashMap<>();
+    private final LinkedHashMap<K, V> cache = new LinkedHashMap<>();
 
     public void cache(K key, V value) {
+        int max = 3;
         if (cache.containsKey(key)) {
             cache.remove(key);
-        } else if (cache.size() >= MAX) {
+        } else if (cache.size() >= max) {
             Iterator<K> iterator = cache.keySet().iterator();
             K first = iterator.next();
             cache.remove(first);

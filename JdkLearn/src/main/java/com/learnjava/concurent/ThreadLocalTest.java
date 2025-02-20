@@ -26,10 +26,10 @@ public class ThreadLocalTest {
     private static class InnerClass {
         public void add(String newStr) {
             //利用Counter类来实例化StringBuilder
-            StringBuilder stringBuilder = Counter.counter.get();
+            StringBuilder stringBuilder = Counter.COUNTER.get();
 
             //将newStr存进ThreadLocal里
-            Counter.counter.set(stringBuilder.append(newStr));
+            Counter.COUNTER.set(stringBuilder.append(newStr));
         }
 
         /**
@@ -38,27 +38,22 @@ public class ThreadLocalTest {
         public void print() {
             System.out.printf("Thread name:%s , ThreadLocal hashcode:%s, Instance hashcode:%s, Value:%s\n",
                     Thread.currentThread().getName(),
-                    Counter.counter.hashCode(),
-                    Counter.counter.get().hashCode(),
-                    Counter.counter.get().toString());
+                    Counter.COUNTER.hashCode(),
+                    Counter.COUNTER.get().hashCode(),
+                    Counter.COUNTER.get().toString());
         }
 
         public void set(String word) {
-            Counter.counter.set(new StringBuilder(word));
+            Counter.COUNTER.set(new StringBuilder(word));
             System.out.printf("Set, Thread name:%s , ThreadLocal hashcode:%s,  Instance hashcode:%s, Value:%s\n",
                     Thread.currentThread().getName(),
-                    Counter.counter.hashCode(),
-                    Counter.counter.get().hashCode(),
-                    Counter.counter.get().toString());
+                    Counter.COUNTER.hashCode(),
+                    Counter.COUNTER.get().hashCode(),
+                    Counter.COUNTER.get().toString());
         }
     }
 
     private static class Counter {
-        private static ThreadLocal<StringBuilder> counter = new ThreadLocal<StringBuilder>() {
-            @Override
-            protected StringBuilder initialValue() {
-                return new StringBuilder();
-            }
-        };
+        private static final ThreadLocal<StringBuilder> COUNTER = ThreadLocal.withInitial(StringBuilder::new);
     }
 }

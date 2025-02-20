@@ -22,7 +22,7 @@ public class TwinsLockTeset {
                         System.out.println(Thread.currentThread().getName());
                         Thread.sleep(1000);
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        throw new RuntimeException(e);
                     } finally {
                         lock.unlock();
                     }
@@ -44,7 +44,7 @@ public class TwinsLockTeset {
                 Thread.sleep(1000);
                 System.out.println();
             } catch (Exception e) {
-                e.printStackTrace();
+                throw new RuntimeException(e);
             }
         }
     }

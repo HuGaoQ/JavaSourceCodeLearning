@@ -1,5 +1,7 @@
 package com.learnjava.io.netty.bio;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.Socket;
@@ -7,6 +9,7 @@ import java.net.Socket;
 /**
  * @author LuoHaiYang
  */
+@Slf4j
 public class ClientHandler {
 
     public static final int MAX_DATE_LEN = 1024;
@@ -18,12 +21,7 @@ public class ClientHandler {
 
     public void start() {
         System.out.println("new client connect in...");
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                doStart();
-            }
-        }).start();
+        new Thread(this::doStart).start();
     }
 
     private void doStart() {
@@ -39,7 +37,7 @@ public class ClientHandler {
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 }

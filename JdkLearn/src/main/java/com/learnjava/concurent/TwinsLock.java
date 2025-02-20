@@ -1,12 +1,13 @@
 package com.learnjava.concurent;
 
+import reactor.util.annotation.Nullable;
+
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.AbstractQueuedSynchronizer;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 
 /**
- *
  * 同时有两个线程获取锁
  *
  * @author LuoHaiYang
@@ -25,12 +26,12 @@ public class TwinsLock implements Lock {
 
         /**
          * 尝试共享式获取同步状态
-         * @param reduceCount
-         * @return
+         *
+         * @param reduceCount 参数
          */
         @Override
         public int tryAcquireShared(int reduceCount) {
-            for (;;) {
+            for (; ; ) {
                 // 获取同步状态
                 int current = getState();
                 int newCount = current - reduceCount;
@@ -43,12 +44,12 @@ public class TwinsLock implements Lock {
 
         /**
          * 共享式释放同步状态
-         * @param returnCount
-         * @return
+         *
+         * @param returnCount 参数
          */
         @Override
         public boolean tryReleaseShared(int returnCount) {
-            for (;;) {
+            for (; ; ) {
                 int current = getState();
                 int newCount = current + returnCount;
                 if (compareAndSetState(current, newCount)) {
@@ -75,7 +76,7 @@ public class TwinsLock implements Lock {
     }
 
     @Override
-    public void lockInterruptibly() throws InterruptedException {
+    public void lockInterruptibly() {
 
     }
 
@@ -85,7 +86,7 @@ public class TwinsLock implements Lock {
     }
 
     @Override
-    public boolean tryLock(long time, TimeUnit unit) throws InterruptedException {
+    public boolean tryLock(long time, @Nullable TimeUnit unit) {
         return false;
     }
 

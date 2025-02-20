@@ -45,10 +45,13 @@ public class LambdaMapDemo {
      */
     public static void test02() {
         String key = "money";
-        Map<String, Integer> map = new HashMap<String, Integer>(){{put(key, 100);}};
+        Map<String, Integer> map = new HashMap<String, Integer>() {{
+            put(key, 100);
+        }};
 
         // 第三个参数时BiFunction，聚合函数（可以这么理解）
-        map.merge(key,100,(oldValue, newValue) -> oldValue + newValue);
+        map.merge(key, 100, Integer::sum);
+//        map.merge(key, 100, (oldValue, newValue) -> oldValue + newValue);
 //        map.merge(key, 100,Integer::sum);
         System.out.println(map);
     }

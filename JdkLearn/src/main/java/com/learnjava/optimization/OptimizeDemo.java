@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- *
  * 代码优化技巧总结
  *
  * @author lhy
@@ -22,7 +21,6 @@ public class OptimizeDemo {
 
     /**
      * 对于通过map来聚合数据（非Lambda方式）
-     * @param map
      */
     public static void mergeData(Map<String, Integer> map) {
         String key = "mapKey";
@@ -31,7 +29,7 @@ public class OptimizeDemo {
         if (map.containsKey(key)) {
             map.put(key, map.get(key) + value);
         } else {
-            map.put(key,value);
+            map.put(key, value);
         }
 
         // 简洁方式
@@ -47,7 +45,6 @@ public class OptimizeDemo {
     /**
      * 针对mergeData里map的put操作，在并发情况下会存在put的时候，以及有其他线程已经put成功了，导致线程不安全，
      * 所以需要使用并发集合列的putIfAbsent方法
-     * @param map
      */
     public static void concurrentMergeData(Map<String, Integer> map) {
         String key = "mapKey";

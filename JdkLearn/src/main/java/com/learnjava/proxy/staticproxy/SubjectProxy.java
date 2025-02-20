@@ -2,7 +2,7 @@ package com.learnjava.proxy.staticproxy;
 
 public class SubjectProxy implements Subject {
 
-    private RealSubject realSubject;
+    private final RealSubject realSubject;
 
     public SubjectProxy() {
         realSubject = new RealSubject();

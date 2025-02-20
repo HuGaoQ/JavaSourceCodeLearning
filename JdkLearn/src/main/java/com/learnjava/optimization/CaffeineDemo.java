@@ -3,13 +3,13 @@ package com.learnjava.optimization;
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import com.github.benmanes.caffeine.cache.RemovalListener;
+import lombok.Data;
 
 import java.math.BigDecimal;
 import java.util.concurrent.TimeUnit;
 
 /**
  * Caffeine 代码Demo（SpringBoot自带的缓存类）
- *
  *
  * @author lhy
  * @date 2021/7/22
@@ -20,8 +20,6 @@ public class CaffeineDemo {
 
     public static RemovalListener<String, ProductVo> listener = (k, v, cause) -> {
         // 业务逻辑
-
-
         // 触发异常
         switch (cause) {
             // 过期
@@ -46,7 +44,7 @@ public class CaffeineDemo {
 
     public static void main(String[] args) {
         // 初始化
-        // afterPropertiesSet();
+         afterPropertiesSet();
     }
 
     /**
@@ -64,8 +62,6 @@ public class CaffeineDemo {
 
     /**
      * 获取对应缓存内容
-     * @param key
-     * @return
      */
     public static ProductVo getProductVo(String key) {
         return productVoCache.get(key, CaffeineDemo::loadSync);
@@ -73,7 +69,6 @@ public class CaffeineDemo {
 
     /**
      * 对对应商品进行缓存
-     * @param key
      */
     public static void putProductVo(String key) {
         productVoCache.put(key, loadSync(key));
@@ -85,47 +80,14 @@ public class CaffeineDemo {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    @Data
     public static class ProductVo {
 
         private String productName;
 
         private BigDecimal price;
 
-        public ProductVo() {}
-
-        public String getProductName() {
-            return productName;
-        }
-
-        public void setProductName(String productName) {
-            this.productName = productName;
-        }
-
-        public BigDecimal getPrice() {
-            return price;
-        }
-
-        public void setPrice(BigDecimal price) {
-            this.price = price;
+        public ProductVo() {
         }
     }
 }

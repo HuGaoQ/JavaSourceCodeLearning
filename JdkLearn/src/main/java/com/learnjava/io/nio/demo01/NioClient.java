@@ -10,7 +10,7 @@ import java.util.Scanner;
  * @author lhy
  * @date 2021/5/22
  */
-public class NioClinet {
+public class NioClient {
 
     public static void main(String[] args) throws Exception {
 
@@ -26,11 +26,11 @@ public class NioClinet {
         while (scan.hasNext()) {
             String next = scan.next();
             // 向缓冲区里写入数据
-            buffer.put( (new Date().toString() + "\n" + next).getBytes());
+            buffer.put((new Date() + "\n" + next).getBytes());
             buffer.flip();
 
             // 向通道里写入带有数据的缓冲区对象， 表示向服务器发送数据
-            channel.write( buffer);
+            channel.write(buffer);
             buffer.clear();
         }
 

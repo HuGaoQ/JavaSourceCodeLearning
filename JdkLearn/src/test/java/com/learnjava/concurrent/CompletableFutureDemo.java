@@ -1,6 +1,7 @@
 package com.learnjava.concurrent;
 
 import org.junit.jupiter.api.Test;
+
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -9,10 +10,8 @@ public class CompletableFutureDemo {
 
     /**
      * completedFuture()：
-     *
+     * <p>
      * 该方法会返回一个已经完成的带有返回值的CompletableFuture
-     *
-     * @throws Exception
      */
     @Test
     public void test_completed_future() throws Exception {
@@ -24,16 +23,15 @@ public class CompletableFutureDemo {
     /**
      * runAsync():
      * 异步运行
-     *
      */
     @Test
-    public void runAsyncExample() throws Exception {
+    public void runAsyncExample() {
         ExecutorService executorService = Executors.newSingleThreadExecutor();
         CompletableFuture cf = CompletableFuture.runAsync(() -> {
             try {
                 Thread.sleep(2000);
             } catch (Exception e) {
-                e.printStackTrace();
+                throw new RuntimeException(e);
             }
             System.out.println(Thread.currentThread().getName());
         }, executorService);
@@ -49,16 +47,15 @@ public class CompletableFutureDemo {
 
     /**
      * 1. supplyAsync()
-     *   如果没有指定线程池，supplyAsync()方法会通过ForkJoinPool.commonPool()中的线程来
-     *   异步完成任务，并通过给定Supplier获得值。
+     * 如果没有指定线程池，supplyAsync()方法会通过ForkJoinPool.commonPool()中的线程来
+     * 异步完成任务，并通过给定Supplier获得值。
      * 2. thenAccept()
-     *   接收CompletableFuture结果并进行处理。
+     * 接收CompletableFuture结果并进行处理。
      * 3. thenAcceptAsync()
-     *   异步接收CompletableFuture结果
-     * @throws Exception
+     * 异步接收CompletableFuture结果
      */
     @Test
-    public void thenApply() throws Exception {
+    public void thenApply() {
         ExecutorService executorService = Executors.newFixedThreadPool(2);
 
         /*Supplier<String> sp = () -> {
@@ -70,15 +67,15 @@ public class CompletableFutureDemo {
             try {
                 Thread.sleep(2000);
             } catch (Exception e) {
-                e.printStackTrace();
+                throw new RuntimeException(e);
             }
             System.out.println("supplyAsync " + Thread.currentThread().getName());
             return "hello ";
-        },executorService).thenAccept(s -> {
+        }, executorService).thenAccept(s -> {
             try {
                 thenApply_test(s + "world");
             } catch (Exception e) {
-                e.printStackTrace();
+                throw new RuntimeException(e);
             }
         });
 
@@ -90,7 +87,7 @@ public class CompletableFutureDemo {
             }
         }
 
-        /** 运行结果：
+        /* 运行结果：
          main
          supplyAsync pool-1-thread-1
          thenApply_test hello world
@@ -105,11 +102,11 @@ public class CompletableFutureDemo {
             try {
                 Thread.sleep(2000);
             } catch (Exception e) {
-                e.printStackTrace();
+                throw new RuntimeException(e);
             }
             System.out.println("supplyAsync " + Thread.currentThread().getName());
             return "hello ";
-        },executorService)/*.thenAcceptAsync(s -> {
+        }, executorService)/*.thenAcceptAsync(s -> {
             try {
                 thenApply_test(s + "world");
             } catch (Exception e) {
@@ -125,7 +122,7 @@ public class CompletableFutureDemo {
             }
         }
 
-        /** 运行结果：
+        /* 运行结果：
          main
          supplyAsync pool-1-thread-1
          thenApply_test hello world
@@ -144,14 +141,14 @@ public class CompletableFutureDemo {
             try {
                 Thread.sleep(2000);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                throw new RuntimeException(e);
             }
             return "hello";
         }).thenAcceptBoth(CompletableFuture.supplyAsync(() -> {
             try {
                 Thread.sleep(3000);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                throw new RuntimeException(e);
             }
             return "world";
         }), (s1, s2) -> {
@@ -159,7 +156,6 @@ public class CompletableFutureDemo {
             System.out.println(s1 + " " + s2);
         }); // hello world
         System.out.println(Thread.currentThread().getName());
-        while (true){}
     }
 
     @Test
@@ -169,19 +165,14 @@ public class CompletableFutureDemo {
             try {
                 Thread.sleep(3000);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                throw new RuntimeException(e);
             }
-            if (1 == 1) {
-                throw new RuntimeException("测试exceptionally...");
-            }
-            return "s1";
+            throw new RuntimeException("测试exceptionally...");
         }, executorService).exceptionally(e -> {
             System.out.println(e.getMessage());
-            return "helloworld " + e.getMessage();
+            return "helloWorld " + e.getMessage();
         });
-        cf.thenAcceptAsync(s -> {
-            System.out.println("thenAcceptAsync: " + s);
-        });
+        cf.thenAcceptAsync(s -> System.out.println("thenAcceptAsync: " + s));
         System.out.println("main: " + Thread.currentThread().getName());
         while (true) {
             if (cf.isDone()) {
@@ -193,9 +184,8 @@ public class CompletableFutureDemo {
 
     /**
      * join()方法会阻塞等待CompletableFuture获取完结果
-     *
+     * <p>
      * 可以看到supplyAsync使用的是线程池中的线程，而main线程会阻塞等待completableFuture任务完成。
-     *
      */
     @Test
     public void exceptionallyByJoin() {
@@ -204,7 +194,7 @@ public class CompletableFutureDemo {
             try {
                 Thread.sleep(3000);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                throw new RuntimeException(e);
             }
             System.out.println(Thread.currentThread().getName());
             if (1 == 1) {
@@ -213,7 +203,7 @@ public class CompletableFutureDemo {
             return "s1";
         }, executorService).exceptionally(e -> {
             System.out.println(e.getMessage());
-            return "helloworld " + e.getMessage();
+            return "helloWorld " + e.getMessage();
         }).join();
         System.out.println(result + "," + Thread.currentThread().getName());
     }

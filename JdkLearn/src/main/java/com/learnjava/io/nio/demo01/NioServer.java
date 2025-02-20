@@ -41,7 +41,7 @@ public class NioServer {
                     SocketChannel readAcceptChannel = serverSocketChannel.accept();
                     ByteBuffer allocateBuffer = ByteBuffer.allocate(1024);
 
-                    int len = 0;
+                    int len;
                     while ((len = readAcceptChannel.read(allocateBuffer)) > 0) {
                         allocateBuffer.flip();
                         System.out.println(new String(allocateBuffer.array(), 0, len));

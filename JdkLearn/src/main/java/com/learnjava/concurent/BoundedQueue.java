@@ -6,21 +6,22 @@ import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * @author LuoHaiYang
- *
+ * <p>
  * Condition 通知/等待经典范式
- *
  */
 public class BoundedQueue<T> {
-    private Object[] items;
+    private final Object[] items;
     // 添加下标，删除下标，数组当前数量
     private int addIndex, removeIndex, count;
-    private Lock lock = new ReentrantLock();
-    private Condition notEmpty = lock.newCondition();
-    private Condition notFull = lock.newCondition();
+    private final Lock lock = new ReentrantLock();
+    private final Condition notEmpty = lock.newCondition();
+    private final Condition notFull = lock.newCondition();
+
     public BoundedQueue(int size) {
         items = new Object[size];
     }
-    public void add(T t) throws InterruptedException{
+
+    public void add(T t) throws InterruptedException {
         // 加锁
         lock.lock();
         try {

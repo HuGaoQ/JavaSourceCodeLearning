@@ -2,12 +2,9 @@ package com.learnjava.lambda;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import sun.java2d.pipe.SpanShapeRenderer;
 
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
@@ -19,16 +16,16 @@ public class LambdaComparatorDemo {
     public static List<Employee> employees;
 
     static {
-        Employee e1 = new Employee(1,23,"M","Rick","Beethovan", "2021-04-01");
-        Employee e2 = new Employee(2,13,"F","Martina","Hengis", "2021-04-02");
-        Employee e3 = new Employee(3,43,"M","Ricky","Martin","2021-04-09" );
-        Employee e4 = new Employee(4,26,"M","Jon","Lowman", "2021-04-10");
-        Employee e5 = new Employee(5,19,"F","Cristine","Maria", "2021-04-01");
-        Employee e6 = new Employee(6,15,"M","David","Feezor", "2021-04-06");
-        Employee e7 = new Employee(7,68,"F","Melissa","Roy", "2021-04-06");
-        Employee e8 = new Employee(8,79,"M","Alex","Gussin", "2021-04-08");
-        Employee e9 = new Employee(9,15,"F","Neetu","Singh", "2021-04-09");
-        Employee e10 = new Employee(10,45,"M","Naveen","Jain", "2021-04-10");
+        Employee e1 = new Employee(1, 23, "M", "Rick", "Beethovan", "2021-04-01");
+        Employee e2 = new Employee(2, 13, "F", "Martina", "Hengis", "2021-04-02");
+        Employee e3 = new Employee(3, 43, "M", "Ricky", "Martin", "2021-04-09");
+        Employee e4 = new Employee(4, 26, "M", "Jon", "Lowman", "2021-04-10");
+        Employee e5 = new Employee(5, 19, "F", "Cristine", "Maria", "2021-04-01");
+        Employee e6 = new Employee(6, 15, "M", "David", "Feezor", "2021-04-06");
+        Employee e7 = new Employee(7, 68, "F", "Melissa", "Roy", "2021-04-06");
+        Employee e8 = new Employee(8, 79, "M", "Alex", "Gussin", "2021-04-08");
+        Employee e9 = new Employee(9, 15, "F", "Neetu", "Singh", "2021-04-09");
+        Employee e10 = new Employee(10, 45, "M", "Naveen", "Jain", "2021-04-10");
         employees = Arrays.asList(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10);
     }
 
@@ -95,9 +92,9 @@ public class LambdaComparatorDemo {
         // 先对性别排序，然后对年龄进行排序
         employees.sort(
                 Comparator.comparing(Employee::getGender)
-                .thenComparing(Employee::getAge)
+                        .thenComparing(Employee::getAge)
                         // 性别，年龄都进行倒序排序
-                .reversed()
+                        .reversed()
         );
         employees.forEach(System.out::println);
 
@@ -110,26 +107,6 @@ public class LambdaComparatorDemo {
         });
         employees.forEach(System.out::println);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     @Data

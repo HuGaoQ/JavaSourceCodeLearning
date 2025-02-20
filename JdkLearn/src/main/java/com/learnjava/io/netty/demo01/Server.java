@@ -1,7 +1,8 @@
 package com.learnjava.io.netty.demo01;
 
 import io.netty.bootstrap.ServerBootstrap;
-import io.netty.channel.*;
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -17,10 +18,10 @@ public class Server {
 
     public static void main(String[] args) throws Exception {
 
-        /**
-         * EventLoopGroup：
-         * NioEventLoopGruop
-         * NioEventLoop
+        /*
+          EventLoopGroup：
+          NioEventLoopGruop
+          NioEventLoop
          */
 
         EventLoopGroup bossGroup = new NioEventLoopGroup(1);

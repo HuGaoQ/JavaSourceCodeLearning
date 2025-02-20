@@ -12,24 +12,24 @@ import java.util.Map;
 public class LambdaMapMerge {
 
     public static void main(String[] args) {
-//        mapMerge();
-//        mapMerge2();
+        mapMerge();
+        mapMerge2();
     }
 
     /**
      * value为int类型的map merge操作，将两个map，相同key merge在一起
-     *
+     * <p>
      * key：string
      * value：int
      */
     public static void mapMerge() {
-        Map<String, Integer> map1= new HashMap<>();
-        map1.put("one",1);
-        map1.put("two",2);
-        map1.put("three",3);
-        Map<String,Integer> map2= new HashMap<>();
-        map2.put("one",1);
-        map2.put("two",2);
+        Map<String, Integer> map1 = new HashMap<>();
+        map1.put("one", 1);
+        map1.put("two", 2);
+        map1.put("three", 3);
+        Map<String, Integer> map2 = new HashMap<>();
+        map2.put("one", 1);
+        map2.put("two", 2);
 
         map1.forEach((key, value) -> map2.merge(key, value, Integer::sum));
         System.out.println(map2);
@@ -37,20 +37,20 @@ public class LambdaMapMerge {
 
     /**
      * value为int类型的map merge操作，将两个map，相同key merge在一起
-     *
+     * <p>
      * key：string
      * value：String
      */
     public static void mapMerge2() {
-        Map<String,String> map1= new HashMap<>();
-        map1.put("one","1");
-        map1.put("two","2");
-        map1.put("three","3");
-        Map<String,String> map2= new HashMap<>();
-        map2.put("one","1");
-        map2.put("two","2");
+        Map<String, String> map1 = new HashMap<>();
+        map1.put("one", "1");
+        map1.put("two", "2");
+        map1.put("three", "3");
+        Map<String, String> map2 = new HashMap<>();
+        map2.put("one", "1");
+        map2.put("two", "2");
 
-        map1.forEach((key, value) -> map2.merge(key, value,(total, num) -> String.valueOf(Integer.parseInt(total) + Integer.parseInt(num))));
+        map1.forEach((key, value) -> map2.merge(key, value, (total, num) -> String.valueOf(Integer.parseInt(total) + Integer.parseInt(num))));
 
         System.out.println(map2);
 

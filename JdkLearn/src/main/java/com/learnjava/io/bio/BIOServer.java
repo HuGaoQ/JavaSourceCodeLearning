@@ -1,5 +1,7 @@
 package com.learnjava.io.bio;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.io.InputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -9,13 +11,12 @@ import java.util.concurrent.Executors;
 /**
  * @author LuoHaiYang
  */
+@Slf4j
 public class BIOServer {
     /**
-     *
      * 玩法就是启动main线程去创建ServerSocket，然后监听6666端口等待连接。
-     *
+     * <p>
      * 客户端的话，可以在terminal里使用命令：telnet 127.0.0.1 6666 就可以连接到ServerSocket 了。
-     *
      */
     public static void main(String[] args) throws Exception {
         // 创建一个无界线程池
@@ -36,12 +37,9 @@ public class BIOServer {
             final Socket socket = serverSocket.accept();
             System.out.println("Client connect...");
 
-            cached.execute(new Runnable() {
-                @Override
-                public void run() {
-                    // do something...
-                    handle(socket);
-                }
+            cached.execute(() -> {
+                // do something...
+                handle(socket);
             });
         }
 
@@ -67,14 +65,13 @@ public class BIOServer {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         } finally {
             try {
                 socket.close();
             } catch (Exception e) {
-                e.printStackTrace();
+                log.info("e: {}", e.getMessage());
             }
-
         }
     }
 }
