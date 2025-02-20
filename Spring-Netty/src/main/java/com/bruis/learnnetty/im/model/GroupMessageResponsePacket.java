@@ -1,6 +1,8 @@
 package com.bruis.learnnetty.im.model;
 
 import com.bruis.learnnetty.im.session.Session;
+import lombok.Getter;
+import lombok.Setter;
 
 import static com.bruis.learnnetty.im.model.Command.GROUP_MESSAGE_RESPONSE;
 
@@ -9,6 +11,8 @@ import static com.bruis.learnnetty.im.model.Command.GROUP_MESSAGE_RESPONSE;
  * @Author luohaiyang
  * @Date 2022/3/24
  */
+@Setter
+@Getter
 public class GroupMessageResponsePacket extends Packet {
 
     private String fromGroupId;
@@ -19,31 +23,6 @@ public class GroupMessageResponsePacket extends Packet {
 
     @Override
     public Byte getCommand() {
-
         return GROUP_MESSAGE_RESPONSE;
-    }
-
-    public String getFromGroupId() {
-        return fromGroupId;
-    }
-
-    public void setFromGroupId(String fromGroupId) {
-        this.fromGroupId = fromGroupId;
-    }
-
-    public Session getFromUser() {
-        return fromUser;
-    }
-
-    public void setFromUser(Session fromUser) {
-        this.fromUser = fromUser;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
     }
 }

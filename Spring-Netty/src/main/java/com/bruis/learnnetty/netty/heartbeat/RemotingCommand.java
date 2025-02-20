@@ -1,16 +1,21 @@
 package com.bruis.learnnetty.netty.heartbeat;
 
+import lombok.Data;
+
 import java.nio.ByteBuffer;
 
 /**
  * @author lhy
  * @date 2021/8/19
  */
+@Data
 public class RemotingCommand {
 
-    private Integer code;       // 请求码
+    // 请求码
+    private Integer code;
 
-    private byte[] body;        // 请求内容
+    // 请求内容
+    private byte[] body;
 
     public static RemotingCommand decode(final ByteBuffer byteBuffer) {
         int limit = byteBuffer.limit();
@@ -39,13 +44,17 @@ public class RemotingCommand {
 
         byte[] headerData;
         headerData = this.headerEncode();
-        length += headerData.length;        // 头
-        length += bodyLength;               // 请求/响应体
+        // 头
+        length += headerData.length;
+        // 请求/响应体
+        length += bodyLength;
 
-        ByteBuffer result = ByteBuffer.allocate(4 + length - bodyLength);        // 分配header
+        // 分配header
+        ByteBuffer result = ByteBuffer.allocate(4 + length - bodyLength);
         result.putInt(length);
         result.put(markProtocolType(headerData.length, SerializeType.JSON));
-        result.put(headerData);             // 添加头
+        // 添加头
+        result.put(headerData);
         result.flip();
 
         return result;
@@ -69,19 +78,4 @@ public class RemotingCommand {
         return length & 0xFFFFFF;
     }
 
-    public Integer getCode() {
-        return code;
-    }
-
-    public void setCode(Integer code) {
-        this.code = code;
-    }
-
-    public byte[] getBody() {
-        return body;
-    }
-
-    public void setBody(byte[] body) {
-        this.body = body;
-    }
 }

@@ -17,7 +17,8 @@ public class LogoutRequestHandler extends SimpleChannelInboundHandler<LogoutRequ
 
     public static final LogoutRequestHandler INSTANCE = new LogoutRequestHandler();
 
-    protected LogoutRequestHandler () {}
+    protected LogoutRequestHandler() {
+    }
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, LogoutRequestPacket msg) {

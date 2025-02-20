@@ -13,11 +13,6 @@ public class NettyApplicationListener implements ApplicationListener<ContextRefr
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
         // 开启额外线程启动Netty服务
-        new Thread() {
-            @Override
-            public void run() {
-                NettyServer.start();
-            }
-        }.start();
+        new Thread(NettyServer::start).start();
     }
 }

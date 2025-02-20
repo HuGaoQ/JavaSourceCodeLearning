@@ -14,7 +14,7 @@ import java.util.Scanner;
  */
 public class ConsoleCommandManager implements ConsoleCommand {
 
-    private Map<String, ConsoleCommand> consoleCommandMap;
+    private final Map<String, ConsoleCommand> consoleCommandMap;
 
     public ConsoleCommandManager() {
         consoleCommandMap = new HashMap<>();

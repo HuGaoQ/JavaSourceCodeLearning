@@ -20,9 +20,9 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class ClientTest {
 
-    public static final EventLoopGroup myEventLoopGroup = new NioEventLoopGroup(1, new ThreadFactory() {
+    public static final EventLoopGroup MY_EVENT_LOOP_GROUP = new NioEventLoopGroup(1, new ThreadFactory() {
 
-        private AtomicInteger threadIndex = new AtomicInteger(0);
+        private final AtomicInteger threadIndex = new AtomicInteger(0);
 
         @Override
         public Thread newThread(Runnable r) {
@@ -30,28 +30,26 @@ public class ClientTest {
         }
     });
 
-    public static final DefaultEventExecutorGroup nettyHandlerExecutorGroup = new DefaultEventExecutorGroup(1,
+    public static final DefaultEventExecutorGroup NETTY_HANDLER_EXECUTOR_GROUP = new DefaultEventExecutorGroup(1,
             new ThreadFactory() {
-                private AtomicInteger threadIndex = new AtomicInteger(0);
+                private final AtomicInteger threadIndex = new AtomicInteger(0);
+
                 @Override
                 public Thread newThread(Runnable r) {
                     return new Thread(r, "nettyHandlerThread_" + this.threadIndex.incrementAndGet());
                 }
             });
 
-    public static final ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor(new ThreadFactory() {
-        @Override
-        public Thread newThread(Runnable r) {
-            Thread thread = new Thread(r, "scheduledThread_");
-            thread.setDaemon(false);
-            return thread;
-        }
+    public static final ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor(r -> {
+        Thread thread = new Thread(r, "scheduledThread_");
+        thread.setDaemon(false);
+        return thread;
     });
 
     public static void main(String[] args) {
 
         Bootstrap bootstrap = new Bootstrap()
-                .group(myEventLoopGroup)
+                .group(MY_EVENT_LOOP_GROUP)
                 .channel(NioSocketChannel.class)
                 .option(ChannelOption.TCP_NODELAY, true)
                 .option(ChannelOption.SO_KEEPALIVE, false)
@@ -59,9 +57,9 @@ public class ClientTest {
                 .option(ChannelOption.SO_RCVBUF, 65535)
                 .handler(new ChannelInitializer<SocketChannel>() {
                     @Override
-                    protected void initChannel(SocketChannel ch) throws Exception {
+                    protected void initChannel(SocketChannel ch) {
                         ChannelPipeline pipeline = ch.pipeline();
-                        pipeline.addLast(nettyHandlerExecutorGroup,
+                        pipeline.addLast(NETTY_HANDLER_EXECUTOR_GROUP,
                                 new NettyEncoder(),
                                 new NettyDecoder(),
                                 new ConnectResponseHandler());
@@ -74,18 +72,13 @@ public class ClientTest {
 
         if (channelFuture.awaitUninterruptibly(2, TimeUnit.MINUTES)) {
 //            heartBeat(channelFuture.channel());
-            scheduledExecutorService.scheduleAtFixedRate(new Runnable() {
-                @Override
-                public void run() {
-                    heartBeat(channelFuture.channel());
-                }
-            }, 1000, 30 * 1000, TimeUnit.MILLISECONDS);
+            scheduledExecutorService.scheduleAtFixedRate(() -> heartBeat(channelFuture.channel()), 1000, 30 * 1000, TimeUnit.MILLISECONDS);
         }
     }
 
     public static void heartBeat(Channel channel) {
         String request = "客户端发起了心跳请求";
-        RemotingCommand command= new RemotingCommand();
+        RemotingCommand command = new RemotingCommand();
         command.setBody(request.getBytes());
         command.setCode(1);
         channel.writeAndFlush(command);

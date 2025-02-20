@@ -1,11 +1,11 @@
 package com.bruis.learnnetty.netty.heartbeat;
 
 import io.netty.buffer.ByteBuf;
-import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
+import lombok.extern.slf4j.Slf4j;
 
 import java.nio.ByteBuffer;
 
@@ -13,11 +13,12 @@ import java.nio.ByteBuffer;
  * @author lhy
  * @date 2021/8/19
  */
+@Slf4j
 @ChannelHandler.Sharable
 public class NettyEncoder extends MessageToByteEncoder<RemotingCommand> {
 
     @Override
-    protected void encode(ChannelHandlerContext ctx, RemotingCommand remotingCommand, ByteBuf out) throws Exception {
+    protected void encode(ChannelHandlerContext ctx, RemotingCommand remotingCommand, ByteBuf out) {
         try {
             ByteBuffer header = remotingCommand.encodeHeader();
             out.writeBytes(header);
@@ -27,12 +28,9 @@ public class NettyEncoder extends MessageToByteEncoder<RemotingCommand> {
             }
 //            out.writeBytes(remotingCommand.getBody());
         } catch (Exception e) {
-            e.printStackTrace();
-            ctx.channel().close().addListener(new ChannelFutureListener() {
-                @Override
-                public void operationComplete(ChannelFuture future) throws Exception {
-                    // 关闭channel成功
-                }
+            log.info("e: {}", e.getMessage());
+            ctx.channel().close().addListener((ChannelFutureListener) future -> {
+                // 关闭channel成功
             });
         }
     }

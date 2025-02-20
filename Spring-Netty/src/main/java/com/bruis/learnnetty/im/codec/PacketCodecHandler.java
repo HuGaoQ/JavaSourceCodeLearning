@@ -19,17 +19,18 @@ public class PacketCodecHandler extends MessageToMessageCodec<ByteBuf, Packet> {
 
     public static final PacketCodecHandler INSTANCE = new PacketCodecHandler();
 
-    private PacketCodecHandler() {}
+    private PacketCodecHandler() {
+    }
 
     @Override
-    protected void encode(ChannelHandlerContext ctx, Packet msg, List<Object> out) throws Exception {
+    protected void encode(ChannelHandlerContext ctx, Packet msg, List<Object> out) {
         ByteBuf byteBuf = ctx.channel().alloc().ioBuffer();
         PacketCodeC.INSTANCE.encode(byteBuf, msg);
         out.add(byteBuf);
     }
 
     @Override
-    protected void decode(ChannelHandlerContext ctx, ByteBuf msg, List<Object> out) throws Exception {
+    protected void decode(ChannelHandlerContext ctx, ByteBuf msg, List<Object> out) {
         out.add(PacketCodeC.INSTANCE.decode(msg));
     }
 }

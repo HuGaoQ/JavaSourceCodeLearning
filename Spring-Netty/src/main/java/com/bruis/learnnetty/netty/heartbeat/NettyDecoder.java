@@ -3,6 +3,7 @@ package com.bruis.learnnetty.netty.heartbeat;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
+import lombok.extern.slf4j.Slf4j;
 
 import java.nio.ByteBuffer;
 
@@ -10,6 +11,7 @@ import java.nio.ByteBuffer;
  * @author lhy
  * @date 2021/8/19
  */
+@Slf4j
 public class NettyDecoder extends LengthFieldBasedFrameDecoder {
 
     public NettyDecoder() {
@@ -17,7 +19,7 @@ public class NettyDecoder extends LengthFieldBasedFrameDecoder {
     }
 
     @Override
-    protected Object decode(ChannelHandlerContext ctx, ByteBuf in) throws Exception {
+    protected Object decode(ChannelHandlerContext ctx, ByteBuf in) {
         ByteBuf frame = null;
 
         try {
@@ -28,7 +30,7 @@ public class NettyDecoder extends LengthFieldBasedFrameDecoder {
             ByteBuffer byteBuffer = frame.nioBuffer();
             return RemotingCommand.decode(byteBuffer);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.info("e: {}", e.getMessage());
         } finally {
             if (null != frame) {
                 frame.release();

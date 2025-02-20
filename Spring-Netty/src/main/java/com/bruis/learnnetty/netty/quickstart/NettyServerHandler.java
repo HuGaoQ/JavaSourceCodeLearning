@@ -4,12 +4,14 @@ import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.util.CharsetUtil;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.TimeUnit;
 
 /**
  * @author LuoHaiYang
  */
+@Slf4j
 public class NettyServerHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelActive(ChannelHandlerContext ctx) {
@@ -28,9 +30,6 @@ public class NettyServerHandler extends ChannelInboundHandlerAdapter {
 
     /**
      * 读取实际数据，这里就是我们读取客户端发送的消息
-     * @param ctx 上下文对象，包含了管道pipeline，通道channel，地址
-     * @param msg 就是客户端发送的数据  默认Object
-     * @throws Exception
      */
     @Override
     public void channelRead(final ChannelHandlerContext ctx, Object msg) throws Exception {
@@ -78,16 +77,13 @@ public class NettyServerHandler extends ChannelInboundHandlerAdapter {
 */
 
         // 自定义定时任务
-        ctx.channel().eventLoop().schedule(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(5 * 1000);
-                    ctx.writeAndFlush(Unpooled.copiedBuffer("hello, client3... task", CharsetUtil.UTF_8));
-                    System.out.println("channel hashcode = " + ctx.channel().hashCode());
-                } catch (Exception e) {
-                    System.out.println("error" + e);
-                }
+        ctx.channel().eventLoop().schedule(() -> {
+            try {
+                Thread.sleep(5 * 1000);
+                ctx.writeAndFlush(Unpooled.copiedBuffer("hello, client3... task", CharsetUtil.UTF_8));
+                System.out.println("channel hashcode = " + ctx.channel().hashCode());
+            } catch (Exception e) {
+                System.out.println("error" + e);
             }
         }, 5, TimeUnit.SECONDS);
 
@@ -95,11 +91,9 @@ public class NettyServerHandler extends ChannelInboundHandlerAdapter {
 
     /**
      * 数据读取完毕
-     * @param ctx
-     * @throws Exception
      */
     @Override
-    public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
+    public void channelReadComplete(ChannelHandlerContext ctx) {
         // writeAndFlush 是write + flush
         // 将数据写入到缓存，并刷新
         // 我们对这个发送的数据会进行编码
@@ -108,12 +102,10 @@ public class NettyServerHandler extends ChannelInboundHandlerAdapter {
 
     /**
      * 处理异常，一般是需要关闭通道
-     * @param ctx 上下文
-     * @param cause 异常
-     * @throws Exception
      */
     @Override
-    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
+        log.info("cause: {}", cause.getMessage());
         ctx.close();
     }
 }

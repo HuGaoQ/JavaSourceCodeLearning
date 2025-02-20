@@ -77,7 +77,7 @@ public class NIOServer {
                     SocketChannel channel = (SocketChannel) key.channel();
 
                     // 获取该channel关联的buffer
-                    ByteBuffer buffer = (ByteBuffer)key.attachment();
+                    ByteBuffer buffer = (ByteBuffer) key.attachment();
 
                     // 从buffer中读取数据到channel中
                     channel.read(buffer);

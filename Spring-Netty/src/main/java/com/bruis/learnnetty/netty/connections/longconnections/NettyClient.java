@@ -1,7 +1,6 @@
 package com.bruis.learnnetty.netty.connections.longconnections;
 
 import com.alibaba.fastjson.JSONObject;
-import com.bruis.learnnetty.netty.connections.longconnections.ClientHandler;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.PooledByteBufAllocator;
 import io.netty.channel.ChannelFuture;
@@ -14,18 +13,21 @@ import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import io.netty.handler.codec.LengthFieldPrepender;
 import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.codec.string.StringEncoder;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StringUtils;
 
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 /**
  * @author lhy
  * @date 2022/2/16
  */
+@Slf4j
 public class NettyClient {
-    public static EventLoopGroup group = null;
-    public static Bootstrap bootstrap = null;
+    public static EventLoopGroup group;
+    public static Bootstrap bootstrap;
     public static ChannelFuture future = null;
+
     static {
         bootstrap = new Bootstrap();
         group = new NioEventLoopGroup();
@@ -35,26 +37,24 @@ public class NettyClient {
         final ClientHandler clientHandler = new ClientHandler();
         bootstrap.handler(new ChannelInitializer<NioSocketChannel>() {
             @Override
-            protected void initChannel(NioSocketChannel ch) throws Exception {
+            protected void initChannel(NioSocketChannel ch) {
                 ch.pipeline().addLast(new LengthFieldBasedFrameDecoder(Integer.MAX_VALUE,
                         0, 4, 0, 4));
                 ch.pipeline().addLast(new StringDecoder());
                 ch.pipeline().addLast(clientHandler);
                 ch.pipeline().addLast(new LengthFieldPrepender(4, false));
-                ch.pipeline().addLast(new StringEncoder(Charset.forName("utf-8")));
+                ch.pipeline().addLast(new StringEncoder(StandardCharsets.UTF_8));
             }
         });
         try {
             future = bootstrap.connect("127.0.0.1", 8080).sync();
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            log.info("e: {}", e.getMessage());
         }
     }
 
     /**
      * 说明：对于这个长连接的例子中，使用了静态化，即单链接、长连接，如果是多链接的话不可使用静态化，需使用线程池。
-     * @param msg
-     * @return
      */
     public Object sendRequest(Object msg) {
         try {
@@ -65,10 +65,11 @@ public class NettyClient {
             myselfPrint("我阻塞了", null);
             return request.get();
         } catch (Exception e) {
-            e.printStackTrace();
+            log.info("e: {}", e.getMessage());
             throw e;
         }
     }
+
     public static void main(String[] args) {
         NettyClient nettyClient = new NettyClient();
         for (int i = 0; i < 10; i++) {
@@ -86,6 +87,6 @@ public class NettyClient {
         if (!StringUtils.isEmpty(value)) {
             builder.append("-").append(value);
         }
-        System.out.println(builder.toString());
+        System.out.println(builder);
     }
 }

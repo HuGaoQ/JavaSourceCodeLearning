@@ -15,14 +15,13 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 public class Server {
     public static void main(String[] args) throws Exception {
 
-        /**
-         * 1. 创建两个线程组：bossGroup和workerGroup
-         * 2. bossGroup只是处理连接请求，真正的和客户端业务处理的话，会交给workerGroup
-         * 3. bossGroup和workerGroup含有的子线程（NioEventLoop）的个数，默认实际为CPU核数 * 2
-         *
-         * bossGroup对应着socket编程中的服务端的Thread，用于监听是否有client连接
-         * workGroup对应着socket编程中的数据读取，读取server端读到的数据
-         *
+        /*
+          1. 创建两个线程组：bossGroup和workerGroup
+          2. bossGroup只是处理连接请求，真正的和客户端业务处理的话，会交给workerGroup
+          3. bossGroup和workerGroup含有的子线程（NioEventLoop）的个数，默认实际为CPU核数 * 2
+
+          bossGroup对应着socket编程中的服务端的Thread，用于监听是否有client连接
+          workGroup对应着socket编程中的数据读取，读取server端读到的数据
          */
         EventLoopGroup bossGroup = new NioEventLoopGroup(1);
         EventLoopGroup workGroup = new NioEventLoopGroup();
@@ -58,6 +57,5 @@ public class Server {
             bossGroup.shutdownGracefully();
             workGroup.shutdownGracefully();
         }
-
     }
 }

@@ -19,7 +19,8 @@ public class QuitGroupRequestHandler extends SimpleChannelInboundHandler<QuitGro
 
     public static final QuitGroupRequestHandler INSTANCE = new QuitGroupRequestHandler();
 
-    protected QuitGroupRequestHandler() {}
+    protected QuitGroupRequestHandler() {
+    }
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, QuitGroupRequestPacket msg) throws Exception {

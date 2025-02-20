@@ -13,6 +13,7 @@ import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import io.netty.handler.codec.LengthFieldPrepender;
 import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.codec.string.StringEncoder;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 基于短连接的Netty服务端
@@ -20,6 +21,7 @@ import io.netty.handler.codec.string.StringEncoder;
  * @author lhy
  * @date 2022/2/11
  */
+@Slf4j
 public class NettyServer {
     public static void main(String[] args) {
         EventLoopGroup bossGroup = new NioEventLoopGroup(1);
@@ -32,7 +34,7 @@ public class NettyServer {
             serverBootstrap.option(ChannelOption.SO_BACKLOG, 128)
                     .childHandler(new ChannelInitializer<SocketChannel>() {
                         @Override
-                        protected void initChannel(SocketChannel ch) throws Exception {
+                        protected void initChannel(SocketChannel ch) {
                             ch.pipeline().addLast(new LengthFieldBasedFrameDecoder(Integer.MAX_VALUE, 0, 4, 0, 4))
                                     .addLast(new StringDecoder())
                                     .addLast(new ServerHandler())
@@ -43,7 +45,7 @@ public class NettyServer {
             ChannelFuture future = serverBootstrap.bind(8080).sync();
             future.channel().closeFuture().sync();
         } catch (Exception e) {
-            e.printStackTrace();
+            log.info("e: {}", e.getMessage());
         } finally {
             bossGroup.shutdownGracefully();
             workerGroup.shutdownGracefully();

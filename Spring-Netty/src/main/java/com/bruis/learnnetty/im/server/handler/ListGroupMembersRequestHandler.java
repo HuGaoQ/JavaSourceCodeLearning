@@ -23,7 +23,8 @@ public class ListGroupMembersRequestHandler extends SimpleChannelInboundHandler<
 
     public static final ListGroupMembersRequestHandler INSTANCE = new ListGroupMembersRequestHandler();
 
-    protected ListGroupMembersRequestHandler() {}
+    protected ListGroupMembersRequestHandler() {
+    }
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, ListGroupMembersRequestPacket requestPacket) {

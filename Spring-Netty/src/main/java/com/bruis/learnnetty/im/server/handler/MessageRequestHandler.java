@@ -19,7 +19,8 @@ public class MessageRequestHandler extends SimpleChannelInboundHandler<MessageRe
 
     public static final MessageRequestHandler INSTANCE = new MessageRequestHandler();
 
-    protected MessageRequestHandler() {}
+    protected MessageRequestHandler() {
+    }
 
     @Override
     protected void channelRead0(ChannelHandlerContext channelHandlerContext, MessageRequestPacket messageRequestPacket) throws Exception {

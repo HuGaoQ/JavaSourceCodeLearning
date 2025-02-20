@@ -17,6 +17,7 @@ import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.codec.string.StringEncoder;
 import io.netty.util.concurrent.DefaultPromise;
 import io.netty.util.concurrent.Promise;
+import lombok.extern.slf4j.Slf4j;
 
 import java.nio.charset.StandardCharsets;
 
@@ -24,9 +25,11 @@ import java.nio.charset.StandardCharsets;
  * @author lhy
  * @date 2022/2/11
  */
+@Slf4j
 public class NettyClient {
-    public static EventLoopGroup group = null;
-    public static Bootstrap bootstrap = null;
+    public static EventLoopGroup group;
+    public static Bootstrap bootstrap;
+
     static {
         bootstrap = new Bootstrap();
         group = new NioEventLoopGroup();
@@ -34,6 +37,7 @@ public class NettyClient {
         bootstrap.group(group);
         bootstrap.option(ChannelOption.ALLOCATOR, PooledByteBufAllocator.DEFAULT);
     }
+
     public static void main(String[] args) {
         try {
             Promise<Response> promise = new DefaultPromise<>(group.next());
@@ -41,7 +45,7 @@ public class NettyClient {
             clientHandler.setPromise(promise);
             bootstrap.handler(new ChannelInitializer<NioSocketChannel>() {
                 @Override
-                protected void initChannel(NioSocketChannel ch) throws Exception {
+                protected void initChannel(NioSocketChannel ch) {
                     ch.pipeline().addLast(new LengthFieldBasedFrameDecoder(Integer.MAX_VALUE, 0, 4, 0, 4))
                             .addLast(new StringDecoder())
                             .addLast(clientHandler)
@@ -60,7 +64,7 @@ public class NettyClient {
             Response response = promise.get();
             System.out.println(JSONObject.toJSONString(response));
         } catch (Exception e) {
-            e.printStackTrace();
+            log.info("e: {}", e.getMessage());
         }
     }
 }

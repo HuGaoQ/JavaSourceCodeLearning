@@ -13,9 +13,6 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
 public class ServerHandler extends ChannelInboundHandlerAdapter {
     /**
      * 接受客户端发送过来的请求
-     * @param ctx
-     * @param msg
-     * @throws Exception
      */
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
@@ -24,8 +21,8 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
         Response response = new Response();
         response.setId(id);
         response.setResult("我是服务端(" + id + ")");
-        /**
-         * 给客户端发送响应结果
+        /*
+          给客户端发送响应结果
          */
         ctx.channel().writeAndFlush(JSONObject.toJSONString(response));
     }

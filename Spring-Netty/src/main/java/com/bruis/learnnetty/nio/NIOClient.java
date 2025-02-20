@@ -22,9 +22,9 @@ public class NIOClient {
 
         // 连接服务器
         if (!socketChannel.connect(inetSocketAddress)) {
-             while (!socketChannel.finishConnect()) {
-                 System.out.println("因为连接需要时间， 客户端不会阻塞，可以做其他工作了...");
-             }
+            while (!socketChannel.finishConnect()) {
+                System.out.println("因为连接需要时间， 客户端不会阻塞，可以做其他工作了...");
+            }
         }
 
         // 如果连接成功，就发送数据

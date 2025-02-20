@@ -18,7 +18,8 @@ public class JoinGroupRequestHandler extends SimpleChannelInboundHandler<JoinGro
 
     public static final JoinGroupRequestHandler INSTANCE = new JoinGroupRequestHandler();
 
-    protected JoinGroupRequestHandler() {}
+    protected JoinGroupRequestHandler() {
+    }
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, JoinGroupRequestPacket msg) throws Exception {

@@ -16,9 +16,6 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
 public class ServerHandler extends ChannelInboundHandlerAdapter {
     /**
      * 接受客户端发送过来的请求
-     * @param ctx
-     * @param msg
-     * @throws Exception
      */
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {

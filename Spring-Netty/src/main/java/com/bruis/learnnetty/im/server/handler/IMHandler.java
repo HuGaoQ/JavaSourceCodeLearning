@@ -1,9 +1,9 @@
 package com.bruis.learnnetty.im.server.handler;
 
+import com.bruis.learnnetty.im.model.Packet;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
-import com.bruis.learnnetty.im.model.Packet;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,7 +21,7 @@ public class IMHandler extends SimpleChannelInboundHandler<Packet> {
 
     public static final IMHandler INSTANCE = new IMHandler();
 
-    private Map<Byte, SimpleChannelInboundHandler<? extends Packet>> handlerMap;
+    private final Map<Byte, SimpleChannelInboundHandler<? extends Packet>> handlerMap;
 
     private IMHandler() {
         handlerMap = new HashMap<>();

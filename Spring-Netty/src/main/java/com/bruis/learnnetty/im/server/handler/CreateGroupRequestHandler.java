@@ -10,7 +10,6 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.group.ChannelGroup;
 import io.netty.channel.group.DefaultChannelGroup;
-import org.omg.PortableServer.ID_UNIQUENESS_POLICY_ID;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +24,8 @@ public class CreateGroupRequestHandler extends SimpleChannelInboundHandler<Creat
 
     public static final CreateGroupRequestHandler INSTANCE = new CreateGroupRequestHandler();
 
-    protected CreateGroupRequestHandler() {}
+    protected CreateGroupRequestHandler() {
+    }
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, CreateGroupRequestPacket msg) throws Exception {

@@ -13,20 +13,20 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 public class ServerTest {
     public static void main(String[] args) throws InterruptedException {
         EventLoopGroup bossGroup = new NioEventLoopGroup(1);
-        EventLoopGroup workerGroup=new NioEventLoopGroup();
-        ServerBootstrap serverBootstrap=new ServerBootstrap();
-        serverBootstrap.group(bossGroup,workerGroup)
+        EventLoopGroup workerGroup = new NioEventLoopGroup();
+        ServerBootstrap serverBootstrap = new ServerBootstrap();
+        serverBootstrap.group(bossGroup, workerGroup)
                 .channel(NioServerSocketChannel.class)
                 //设置线程队列中等待连接的个数
-                .option(ChannelOption.SO_BACKLOG,128)
+                .option(ChannelOption.SO_BACKLOG, 128)
                 .option(ChannelOption.SO_REUSEADDR, true)
                 .childOption(ChannelOption.TCP_NODELAY, true)
                 .childOption(ChannelOption.SO_SNDBUF, 65535)
                 .childOption(ChannelOption.SO_RCVBUF, 65535)
-                .childOption(ChannelOption.SO_KEEPALIVE,true)
+                .childOption(ChannelOption.SO_KEEPALIVE, true)
                 .childHandler(new ChannelInitializer<NioSocketChannel>() {
                     @Override
-                    protected void initChannel(NioSocketChannel nioSocketChannel) throws Exception {
+                    protected void initChannel(NioSocketChannel nioSocketChannel) {
                         nioSocketChannel.pipeline()
                                 .addLast(new NettyEncoder(),
                                         new NettyDecoder(),
@@ -42,7 +42,6 @@ public class ServerTest {
     }
 
     public static class ConnectServerHandler extends SimpleChannelInboundHandler<RemotingCommand> {
-
         @Override
         protected void channelRead0(ChannelHandlerContext ctx, RemotingCommand msg) throws Exception {
             System.out.println("Server服务端：" + new String(msg.getBody()));

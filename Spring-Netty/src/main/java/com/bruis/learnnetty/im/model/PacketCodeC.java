@@ -21,7 +21,6 @@ public class PacketCodeC {
     private final Map<Byte, Class<? extends Packet>> packetTypeMap;
     private final Map<Byte, Serializer> serializerMap;
 
-
     private PacketCodeC() {
         packetTypeMap = new HashMap<>();
         packetTypeMap.put(LOGIN_REQUEST, LoginRequestPacket.class);
@@ -45,7 +44,6 @@ public class PacketCodeC {
         Serializer serializer = new JSONSerializer();
         serializerMap.put(serializer.getSerializerAlogrithm(), serializer);
     }
-
 
     public void encode(ByteBuf byteBuf, Packet packet) {
         // 1. 序列化 java 对象
@@ -86,17 +84,14 @@ public class PacketCodeC {
         if (requestType != null && serializer != null) {
             return serializer.deserialize(requestType, bytes);
         }
-
         return null;
     }
 
     private Serializer getSerializer(byte serializeAlgorithm) {
-
         return serializerMap.get(serializeAlgorithm);
     }
 
     private Class<? extends Packet> getRequestType(byte command) {
-
         return packetTypeMap.get(command);
     }
 }

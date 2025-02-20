@@ -46,7 +46,6 @@ public class InitLoadRemoteMethod implements ApplicationListener<ContextRefreshe
 
     /**
      * 值越小优先级越高
-     * @return
      */
     @Override
     public int getOrder() {

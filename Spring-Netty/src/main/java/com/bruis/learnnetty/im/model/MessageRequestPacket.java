@@ -1,5 +1,8 @@
 package com.bruis.learnnetty.im.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import static com.bruis.learnnetty.im.model.Command.MESSAGE_REQUEST;
 
 /**
@@ -7,6 +10,8 @@ import static com.bruis.learnnetty.im.model.Command.MESSAGE_REQUEST;
  * @Author luohaiyang
  * @Date 2022/3/22
  */
+@Setter
+@Getter
 public class MessageRequestPacket extends Packet {
 
     private String toUserId;
@@ -23,21 +28,5 @@ public class MessageRequestPacket extends Packet {
     @Override
     public Byte getCommand() {
         return MESSAGE_REQUEST;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public String getToUserId() {
-        return toUserId;
-    }
-
-    public void setToUserId(String toUserId) {
-        this.toUserId = toUserId;
     }
 }

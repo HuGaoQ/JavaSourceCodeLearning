@@ -10,7 +10,7 @@ import java.util.Scanner;
  * @Author luohaiyang
  * @Date 2022/3/24
  */
-public class JoinGroupConsoleCommand implements ConsoleCommand{
+public class JoinGroupConsoleCommand implements ConsoleCommand {
 
     @Override
     public void exec(Scanner scanner, Channel channel) {

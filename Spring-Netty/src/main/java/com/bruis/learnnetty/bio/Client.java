@@ -1,5 +1,7 @@
 package com.bruis.learnnetty.bio;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.Socket;
@@ -7,16 +9,16 @@ import java.util.Scanner;
 
 /**
  * @author LuoHaiYang
- *
+ * <p>
  * 在bio的例子中，主要有server端和client端:
- *
+ * <p>
  * 1. Server端开启一个线程通过serverSocket.accept()来监听有没有socket连接进来，之列称之为线程A。
  * 2. 然后在ClientHandler中又开启了一个线程，称为B，用于从socket中获取服务器端传过来的消息，线程B中通过while-true循环来获取。
  * 3. 在client客户端中，还有一个线程称为C，一直去循环获取服务端的数据。
- *
+ * <p>
  * 在nio中，NioEventLoop源码中的run方法就对应着线程A的while-true方法以及线程c的while-true方法。而NioEventLoop的select方法就对应着serverSocket的accept操作。
- *
  */
+@Slf4j
 public class Client {
     private static final String HOST = "127.0.0.1";
     private static final int PORT = 8000;
@@ -60,7 +62,7 @@ public class Client {
         try {
             Thread.sleep(SLEEP_TIME);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            log.info("e: {}", e.getMessage());
         }
     }
 }

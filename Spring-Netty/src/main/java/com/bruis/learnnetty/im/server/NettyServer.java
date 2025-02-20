@@ -1,10 +1,10 @@
 package com.bruis.learnnetty.im.server;
 
 import com.bruis.learnnetty.im.codec.PacketCodecHandler;
-import com.bruis.learnnetty.im.codec.PacketDecoder;
-import com.bruis.learnnetty.im.codec.PacketEncoder;
 import com.bruis.learnnetty.im.codec.Spliter;
-import com.bruis.learnnetty.im.server.handler.*;
+import com.bruis.learnnetty.im.server.handler.AuthHandler;
+import com.bruis.learnnetty.im.server.handler.IMHandler;
+import com.bruis.learnnetty.im.server.handler.LoginRequestHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
@@ -35,7 +35,7 @@ public class NettyServer {
                 .childOption(ChannelOption.TCP_NODELAY, true)
                 .childHandler(new ChannelInitializer<NioSocketChannel>() {
                     @Override
-                    protected void initChannel(NioSocketChannel ch) throws Exception {
+                    protected void initChannel(NioSocketChannel ch) {
                         ch.pipeline().addLast(new Spliter());
                         ch.pipeline().addLast(PacketCodecHandler.INSTANCE);
                         ch.pipeline().addLast(LoginRequestHandler.INSTANCE);
@@ -43,15 +43,15 @@ public class NettyServer {
                         ch.pipeline().addLast(IMHandler.INSTANCE);
                     }
                 });
-        bind(serverBootstrap, PORT);
+        bind(serverBootstrap);
     }
 
-    private static void bind(final ServerBootstrap serverBootstrap, final int port) {
-        serverBootstrap.bind(port).addListener(future -> {
+    private static void bind(final ServerBootstrap serverBootstrap) {
+        serverBootstrap.bind(NettyServer.PORT).addListener(future -> {
             if (future.isSuccess()) {
-                System.out.println(new Date() + ": 端口[" + port + "]绑定成功！");
+                System.out.println(new Date() + ": 端口[" + NettyServer.PORT + "]绑定成功！");
             } else {
-                System.err.println("端口[" + port + "]绑定失败!");
+                System.err.println("端口[" + NettyServer.PORT + "]绑定失败!");
             }
         });
     }

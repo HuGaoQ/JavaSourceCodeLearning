@@ -1,14 +1,17 @@
 package com.bruis.learnnetty.thread.reentranlock;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * 子线程，用于模拟服务端处理
  *
  * @author lhy
  * @date 2022/2/10
  */
+@Slf4j
 public class SubThread extends Thread {
 
-    private RequestFuture request;
+    private final RequestFuture request;
 
     public SubThread(RequestFuture request) {
         this.request = request;
@@ -23,7 +26,7 @@ public class SubThread extends Thread {
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            log.info("e: {}", e.getMessage());
         }
         RequestFuture.received(response);
     }

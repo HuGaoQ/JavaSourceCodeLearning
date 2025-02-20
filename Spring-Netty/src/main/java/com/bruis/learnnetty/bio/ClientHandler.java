@@ -1,5 +1,7 @@
 package com.bruis.learnnetty.bio;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.Socket;
@@ -7,6 +9,7 @@ import java.net.Socket;
 /**
  * @author LuoHaiYang
  */
+@Slf4j
 public class ClientHandler {
     public static final int MAX_DATA_LEN = 1024;
     private final Socket socket;
@@ -17,12 +20,7 @@ public class ClientHandler {
 
     public void start() {
         System.out.println("新客户端接入");
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                doStart();
-            }
-        }).start();
+        new Thread(this::doStart).start();
     }
 
     private void doStart() {
@@ -37,9 +35,8 @@ public class ClientHandler {
                     //socket.getOutputStream().write(data);
                 }
             }
-
         } catch (IOException e) {
-            e.printStackTrace();
+            log.info("e: {}", e.getMessage());
         }
     }
 }

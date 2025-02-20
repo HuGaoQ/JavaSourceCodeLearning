@@ -19,6 +19,5 @@ public class SendToGroupConsoleCommand implements ConsoleCommand {
         String toGroupId = scanner.next();
         String message = scanner.next();
         channel.writeAndFlush(new GroupMessageRequestPacket(toGroupId, message));
-
     }
 }

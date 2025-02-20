@@ -5,7 +5,10 @@ import com.bruis.learnnetty.im.model.LoginResponsePacket;
 import com.bruis.learnnetty.im.session.Session;
 import com.bruis.learnnetty.im.util.IDUtil;
 import com.bruis.learnnetty.im.util.SessionUtil;
-import io.netty.channel.*;
+import io.netty.channel.ChannelFutureListener;
+import io.netty.channel.ChannelHandler;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.SimpleChannelInboundHandler;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -20,7 +23,8 @@ public class LoginRequestHandler extends SimpleChannelInboundHandler<LoginReques
 
     public static final LoginRequestHandler INSTANCE = new LoginRequestHandler();
 
-    protected LoginRequestHandler() {}
+    protected LoginRequestHandler() {
+    }
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, LoginRequestPacket loginRequestPacket) {

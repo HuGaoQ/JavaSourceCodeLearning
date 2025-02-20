@@ -3,9 +3,6 @@ package com.bruis.learnnetty.netty.channelpipeline;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
-/**
- * @author
- */
 public class InBoundHandlerA extends ChannelInboundHandlerAdapter {
 
     @Override

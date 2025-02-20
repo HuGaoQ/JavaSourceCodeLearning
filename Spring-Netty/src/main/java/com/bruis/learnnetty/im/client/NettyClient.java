@@ -6,8 +6,6 @@ import com.bruis.learnnetty.im.codec.PacketEncoder;
 import com.bruis.learnnetty.im.codec.Spliter;
 import com.bruis.learnnetty.im.console.ConsoleCommandManager;
 import com.bruis.learnnetty.im.console.LoginConsoleCommand;
-import com.bruis.learnnetty.im.model.LoginRequestPacket;
-import com.bruis.learnnetty.im.model.MessageRequestPacket;
 import com.bruis.learnnetty.im.util.SessionUtil;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
