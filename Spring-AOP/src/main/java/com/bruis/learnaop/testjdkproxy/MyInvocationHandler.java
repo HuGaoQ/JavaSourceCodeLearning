@@ -6,7 +6,7 @@ import java.lang.reflect.Proxy;
 
 public class MyInvocationHandler implements InvocationHandler {
     //代理目标对象
-    private Object target;
+    private final Object target;
     public MyInvocationHandler(Object target) {
         super();
         this.target = target;
@@ -14,6 +14,7 @@ public class MyInvocationHandler implements InvocationHandler {
     /**
      * 执行目标对象的方法
      */
+    @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
         System.out.println("---------------------------------方法purchase购买前，代理人吃回扣了----------------------------");
         //执行目标对象的方法

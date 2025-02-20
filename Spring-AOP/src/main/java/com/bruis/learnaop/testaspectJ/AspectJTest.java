@@ -6,11 +6,11 @@ import org.aspectj.lang.annotation.*;
 @Aspect
 public class AspectJTest {
 
-    /**
-     * 环绕通知中，在JoinPoint.process()方法前调用的方法，会在@Before调用之前调用；
-     * 在JoinPoint.process()方法后调用的方法，会在@After调用之前调用；
-     * 如下：
-     * @AroundBefore the testaspectJ()...
+    /*
+      环绕通知中，在JoinPoint.process()方法前调用的方法，会在@Before调用之前调用；
+      在JoinPoint.process()方法后调用的方法，会在@After调用之前调用；
+      如下：
+      @AroundBefore the testaspectJ()...
      * Before the testaspectJ()...
      * testaspectJ()...
      * @AroundAfter the testaspectJ()...
@@ -28,7 +28,8 @@ public class AspectJTest {
      * 定义的切点
      */
     @Pointcut("execution(* *.test(..))")
-    public void test(){}
+    public void test() {
+    }
 
     /**
      * 前置通知
@@ -48,18 +49,16 @@ public class AspectJTest {
 
     /**
      * 环绕通知
-     * @param p
-     * @return
      */
     @Around("test()")
     public Object aroundTest(ProceedingJoinPoint p) {
         System.err.println("beforeTest by @Around...");
-        Object o = null;
+        Object o;
         try {
             // 处理
             o = p.proceed();
         } catch (Throwable a) {
-            a.printStackTrace();
+            throw new RuntimeException(a);
         }
         System.err.println("afterTest by @Around...");
         return o;

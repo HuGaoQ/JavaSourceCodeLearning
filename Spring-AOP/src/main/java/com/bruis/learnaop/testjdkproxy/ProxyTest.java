@@ -14,7 +14,7 @@ public class ProxyTest {
         //实例化InvocationHandler
         MyInvocationHandler invocationHandler = new MyInvocationHandler(userService);
         //根据目标对象生成代理对象
-        UserService proxy = (UserService)invocationHandler.getProxy();
+        UserService proxy = (UserService) invocationHandler.getProxy();
         //调用代理对象的方法
         proxy.purchase();
     }
