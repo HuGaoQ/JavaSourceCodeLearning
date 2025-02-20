@@ -18,6 +18,5 @@ public class Test {
 
         eventMulticaster.multicastEvent(new SnowEvent());
         eventMulticaster.multicastEvent(new RainEvent());
-
     }
 }

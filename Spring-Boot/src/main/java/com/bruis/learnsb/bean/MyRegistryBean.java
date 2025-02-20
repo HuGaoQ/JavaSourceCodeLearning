@@ -3,10 +3,10 @@ package com.bruis.learnsb.bean;
 /**
  * @author LuoHaiYang
  */
-public class MyRegistryBean extends Person{
+public class MyRegistryBean extends Person {
     @Override
     public String getName() {
-        return "myRegistyBean";
+        return "myRegistryBean";
     }
 
     @Override

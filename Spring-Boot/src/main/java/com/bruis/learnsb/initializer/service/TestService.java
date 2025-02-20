@@ -15,8 +15,6 @@ public class TestService implements ApplicationContextAware {
 
     /**
      * 将SpringIOC容器注册到该类的成员变量中
-     * @param applicationContext
-     * @throws BeansException
      */
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {

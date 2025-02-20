@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 public class MyPerson implements FactoryBean<Person> {
 
     @Override
-    public Person getObject() throws Exception {
+    public Person getObject() {
         return new Person();
     }
 

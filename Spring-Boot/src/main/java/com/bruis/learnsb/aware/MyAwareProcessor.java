@@ -7,7 +7,6 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Component;
 
 /**
- *
  * 自定义实现的aware处理器
  *
  * @author LuoHaiYang

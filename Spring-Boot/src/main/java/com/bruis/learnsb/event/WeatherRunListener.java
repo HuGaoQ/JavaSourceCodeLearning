@@ -1,7 +1,8 @@
 package com.bruis.learnsb.event;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import javax.annotation.Resource;
 
 /**
  * @author LuoHaiYang
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class WeatherRunListener {
 
-    @Autowired
+    @Resource
     private WeatherEventMulticaster eventMulticaster;
 
     public void snow() {

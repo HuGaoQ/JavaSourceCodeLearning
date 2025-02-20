@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 public class FirstApplicationRunner implements ApplicationRunner {
 
     @Override
-    public void run(ApplicationArguments args) throws Exception {
+    public void run(ApplicationArguments args) {
         System.out.println("\u001B[32m >>> first application runner<<<");
     }
 }

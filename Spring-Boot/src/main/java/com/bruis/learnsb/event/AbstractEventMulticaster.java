@@ -1,17 +1,17 @@
 package com.bruis.learnsb.event;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
  * @author LuoHaiYang
  */
 @Component
-public abstract class AbstractEventMulticaster implements EventMulticaster{
+public abstract class AbstractEventMulticaster implements EventMulticaster {
 
-    @Autowired
+    @Resource
     private List<WeatherListener> listenerList;
 
     @Override

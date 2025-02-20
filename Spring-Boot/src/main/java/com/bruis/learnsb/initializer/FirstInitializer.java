@@ -11,9 +11,8 @@ import java.util.Map;
 
 /**
  * @author LuoHaiYang
- *
+ * <p>
  * 模拟SpringBoot的系统初始化器的调用
- *
  */
 @Order(1)
 public class FirstInitializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {

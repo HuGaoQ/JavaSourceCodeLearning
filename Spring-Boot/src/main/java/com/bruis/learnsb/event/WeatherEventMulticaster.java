@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
  * @author LuoHaiYang
  */
 @Component
-public class WeatherEventMulticaster extends AbstractEventMulticaster{
+public class WeatherEventMulticaster extends AbstractEventMulticaster {
 
     @Override
     void doStart() {

@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 public class SecondCommandLineRunner implements CommandLineRunner {
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         // 给\u001B 给字段加颜色
         System.out.println("\u001B[32m >>> startup first runner<<<");
     }

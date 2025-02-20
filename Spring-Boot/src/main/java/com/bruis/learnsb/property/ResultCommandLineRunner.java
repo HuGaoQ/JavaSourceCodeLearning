@@ -18,7 +18,7 @@ public class ResultCommandLineRunner implements CommandLineRunner, EnvironmentAw
     private Flag flag;
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         // 启动框架时获取配置信息
         System.out.println(environment.getProperty("bruis.github.url"));
         System.out.println(environment.getProperty("random.value"));
