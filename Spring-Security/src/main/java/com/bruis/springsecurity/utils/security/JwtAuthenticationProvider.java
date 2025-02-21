@@ -10,9 +10,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 /**
  * @author LuoHaiYang
- *
+ * <p>
  * DaoAuthenticationProvider 系统默认的身份认证组件
- *
  */
 public class JwtAuthenticationProvider extends DaoAuthenticationProvider {
 
@@ -24,9 +23,6 @@ public class JwtAuthenticationProvider extends DaoAuthenticationProvider {
 
     /**
      * 接口AuthenticationProvider的authenticate方法
-      * @param authentication
-     * @return
-     * @throws AuthenticationException
      */
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {

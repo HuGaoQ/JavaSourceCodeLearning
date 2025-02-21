@@ -1,9 +1,6 @@
 package com.bruis.springsecurity.config;
 
-import com.bruis.springsecurity.utils.security.JwtAuthenticationFilter;
 import com.bruis.springsecurity.utils.security.JwtAuthenticationProvider;
-import com.bruis.springsecurity.utils.security.JwtLoginFilter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -16,8 +13,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
+
+import javax.annotation.Resource;
 
 /**
  * @author LuoHaiYang
@@ -27,13 +25,11 @@ import org.springframework.security.web.authentication.logout.HttpStatusReturnin
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
+    @Resource
     private UserDetailsService userDetailsService;
 
     /**
      * http请求拦截认证
-     * @param http
-     * @throws Exception
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -61,7 +57,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    protected void configure(AuthenticationManagerBuilder auth) {
         // 只用系统默认的身份认证组件，并配上passwordEncoder
         // auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
 

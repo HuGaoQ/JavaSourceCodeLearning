@@ -11,12 +11,11 @@ import java.io.IOException;
 
 /**
  * @author LuoHaiYang
- *
+ * <p>
  * 登录检查过滤器, 原逻辑是在BasicAuthenticationFilter类中.
  * 即判断请求头中是否包含：Authorization, 是否包含basic。
- *
+ * <p>
  * 这个类非常重要。
- *
  */
 public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
 

@@ -15,7 +15,6 @@ import java.io.IOException;
 public class HttpUtils {
     /**
      * 获取HttpServletRequest对象
-     * @return
      */
     public static HttpServletRequest getHttpServletRequest() {
         return ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
@@ -23,9 +22,6 @@ public class HttpUtils {
 
     /**
      * 输出信息到浏览器
-     * @param response
-     * @param data
-     * @throws IOException
      */
     public static void write(HttpServletResponse response, Object data) throws IOException {
         response.setContentType("application/json; charset=utf-8");

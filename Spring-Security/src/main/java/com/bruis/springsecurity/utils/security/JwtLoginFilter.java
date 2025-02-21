@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.bruis.springsecurity.utils.HttpUtils;
 import com.bruis.springsecurity.utils.JwtTokenUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.event.InteractiveAuthenticationSuccessEvent;
 import org.springframework.security.core.Authentication;
@@ -25,8 +26,10 @@ import java.nio.charset.Charset;
 
 /**
  * 启动登录认证流程过滤器
+ *
  * @author LuoHaiYang
  */
+@Slf4j
 public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
 
     public static final String UFT8 = "UTF-8";
@@ -36,14 +39,7 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
     }
 
     /**
-     *
      * super.doFilter() 主要调用的是AbstractAuthenticationProcessingFilter方法中的doFilter()
-     *
-     * @param req
-     * @param res
-     * @param chain
-     * @throws IOException
-     * @throws ServletException
      */
     @Override
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
@@ -76,7 +72,7 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
         JwtAuthenticationToken token = new JwtAuthenticationToken(username, password);
 
         // 调用UsernamePasswordAuthenticationFilter#setDetails方法。
-        setDetails(request,token);
+        setDetails(request, token);
 
         // return super.attemptAuthentication(request, response);
         return this.getAuthenticationManager().authenticate(token);
@@ -84,15 +80,9 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
 
     /**
      * 认证成功之后
-     * @param request
-     * @param response
-     * @param chain
-     * @param authResult
-     * @throws IOException
-     * @throws ServletException
      */
     @Override
-    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
+    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException {
         // super.successfulAuthentication(request, response, chain, authResult);
         // 存储登录认证信息到上下文中
         SecurityContextHolder.getContext().setAuthentication(authResult);
@@ -109,8 +99,6 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
 
     /**
      * 获取请求Body
-     * @param request
-     * @return
      */
     public String getBody(HttpServletRequest request) {
         StringBuilder stringBuilder = new StringBuilder();
@@ -121,29 +109,28 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
             inputStream = request.getInputStream();
             // 将输入流中报装为BufferedReader
             reader = new BufferedReader(new InputStreamReader(inputStream, Charset.forName(UFT8)));
-            String line = "";
+            String line;
             while ((line = reader.readLine()) != null) {
                 stringBuilder.append(line);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            log.info("e: {}", e.getMessage());
         } finally {
             if (inputStream != null) {
                 try {
                     inputStream.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    log.info("e: {}", e.getMessage());
                 }
             }
             if (reader != null) {
                 try {
                     reader.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    log.info("e: {}", e.getMessage());
                 }
             }
         }
-
         return stringBuilder.toString();
     }
 }

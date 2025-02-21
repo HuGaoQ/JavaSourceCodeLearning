@@ -11,7 +11,7 @@ import java.util.Set;
  * @author LuoHaiYang
  */
 @Service
-public class SysUserServiceImpl implements UserService{
+public class SysUserServiceImpl implements UserService {
 
     @Override
     public User findByUsername(String username) {

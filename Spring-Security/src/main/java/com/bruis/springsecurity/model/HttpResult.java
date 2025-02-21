@@ -1,8 +1,11 @@
 package com.bruis.springsecurity.model;
 
+import lombok.Data;
+
 /**
  * @author LuoHaiYang
  */
+@Data
 public class HttpResult {
     private int code = 200;
     private String msg;
@@ -33,33 +36,5 @@ public class HttpResult {
         HttpResult r = new HttpResult();
         r.setData(data);
         return r;
-    }
-
-    public static HttpResult ok() {
-        return new HttpResult();
-    }
-
-    public int getCode() {
-        return code;
-    }
-
-    public void setCode(int code) {
-        this.code = code;
-    }
-
-    public String getMsg() {
-        return msg;
-    }
-
-    public void setMsg(String msg) {
-        this.msg = msg;
-    }
-
-    public Object getData() {
-        return data;
-    }
-
-    public void setData(Object data) {
-        this.data = data;
     }
 }
