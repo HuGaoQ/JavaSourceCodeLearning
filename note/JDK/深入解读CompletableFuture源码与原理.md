@@ -174,12 +174,12 @@ CompletableFuture类实现了Future接口和CompletionStage接口，Future大家
 
 ```Java
 public class CompletableFuture<T> implements Future<T>, CompletionStage<T> {
-	volatile Object result;       // CompletableFuture的结果值或者是一个异常的报装对象AltResult
+	volatile Object result;       // CompletableFuture的结果值或者是一个异常的包装对象AltResult
     volatile Completion stack;    // 依赖操作栈的栈顶
     ...
     // CompletableFuture的方法
-    ... 
-	// Unsafe mechanics
+    ...
+    // Unsafe mechanics
     private static final sun.misc.Unsafe UNSAFE;
     private static final long RESULT;
     private static final long STACK;

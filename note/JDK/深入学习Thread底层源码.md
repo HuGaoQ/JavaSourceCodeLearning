@@ -43,7 +43,7 @@
 4. 如果线程正好在等待获得 monitor lock 锁，比如在等待进入 synchronized 修饰的代码块或方法时，会从 RUNNABLE 变成 BLOCKED，BLOCKED 表示阻塞的意思；
 5. WAITING 和 TIMED_WAITING 类似，都表示在遇到 Object#wait、Thread#join、LockSupport#park 这些方法时，线程就会等待另一个线程执行完特定的动作之后，才能结束等待，只不过 TIMED_WAITING 是带有等待时间的（可以看下面的 join 方法的 demo）。
 
-上图中的六中状态都只是根据源码中列出的6中状态，但是Java线程的处理方法都是围绕这6中状态的。
+上图中的六种状态都只是根据源码中列出的6中状态，但是Java线程的处理方法都是围绕这6中状态的。
 
 ### 3. 线程的基本概念
 

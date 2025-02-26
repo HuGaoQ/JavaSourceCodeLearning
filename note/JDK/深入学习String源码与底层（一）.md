@@ -29,7 +29,7 @@
 
 #### 1.1 String的修饰符与实现类
 
-打开String源码，可以看到String类的由final修饰的，并且实现了Serializable，Comparable，CharSequence接口。
+打开String源码，可以看到String类是由final修饰的，并且实现了Serializable，Comparable，CharSequence接口。
 ```Java
 public final class String
     implements java.io.Serializable, Comparable<String>, CharSequence {
@@ -37,7 +37,7 @@ public final class String
 ```
 
 1. String类是由final修饰的，表明String类不能被继承，并且String类中的成员方法都默认是final方法。
-2. String类是由final修饰的，表明String类一旦被创建，就无法改变，对String对象的任何操作都不会影响到原对象，==任何的change操作都会产生新的String对象。==
+2. String类是由final修饰的，表明String类一旦被创建，就无法改变，对String对象的任何操作都不会影响到原对象，==任何的change操作都会产生新的String对象。
 
 #### 1.2 String类的成员变量
 
